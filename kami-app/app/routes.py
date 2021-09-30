@@ -91,6 +91,7 @@ def index():
     if request.method == "POST":
         kami_form = kamiForm(request.form)
         if kami_form:
+            print("starting evaluation")
             kevaluator = Kami(
                 [kami_form.reference, kami_form.prediction], 
                 verbosity=app.config["KAMI_OPT_VERB"], 
@@ -100,5 +101,7 @@ def index():
                 apply_transforms=kami_form.options)
             tables, titles = make_dataframe(kevaluator.scores.board)
         else:
+            print("cannot perform evaluation")
             error = "Invalid Form"
     return render_template('page/index.html', title="KaMI App | Upload", kami_version = app.config['KAMI_VERSION'], error=error, tables=tables, titles=titles)
+
