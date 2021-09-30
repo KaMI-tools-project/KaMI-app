@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!--<link rel="icon" type="image/png" href="../static/favicon.ico" />-->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>{{ title }}</title>
+      {% include "partials/css.html" %}
+      {% include "partials/metadata.html" %}
+      <style>
+          .a_inline {
+              color: #4B8BBE;
+          }
+
+          .file-field.medium .file-path-wrapper {
+          height: 3rem; }
+          .file-field.medium .file-path-wrapper .file-path {
+          height: 2.8rem; }
+
+          .file-field.big-2 .file-path-wrapper {
+          height: 3.7rem; }
+          .file-field.big-2 .file-path-wrapper .file-path {
+          height: 3.5rem; }
+
+          #top-navbar {
+              background-color:  #306990; font-weight: bold; color:white;
+          }
+          #top-navbar a, #top-navbar a:visited, #top-navbar  a:link,#top-navbar  a:hover {
+              color:white;
+          }
+
+          .file-return {
+            margin: 0;
+          }
+          .file-return:not(:empty) {
+            margin: 1em 0;
+          }
+          .js .file-return {
+            font-style: italic;
+            font-size: .9em;
+            font-weight: bold;
+          }
+          .js .file-return:not(:empty):before {
+            content: "Selected file: ";
+            font-style: normal;
+            font-weight: normal;
+          }
+
+        .upload-zone {
+          padding-top: 2%;
+          padding-bottom: 2%;
+          border:solid;
+          border-color:#306990;
+          border-width:thin;
+          box-shadow: 2px 2px 10px #306990;
+        }
+
+        .center-image {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+
+      </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-light justify-content-between" id="top-navbar" style="">
+        <a class="navbar-brand" href="{{url_for('index')}}">KaMI</a>
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item">
+          <a href="https://github.com/alix-tz/aspyre-gt/issues/new" class="nav-link" target="_blank">Report an error</a>
+        </li>-->
+        <li class="nav-item">
+          <a class="nav-link disabled" style="color: #4B8BBE;" href="#">Running with KaMI v. {{ kami_version }}</a>
+        </li>
+      </ul>
+      </nav>
+        <div class="row">
+            <div class="col">
+            {% block body %}{% endblock %}
+            </div>
+        </div>
+      </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  {% block script%}{% endblock %}
+  </body>
+</html>

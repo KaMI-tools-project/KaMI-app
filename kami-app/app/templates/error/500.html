@@ -1,0 +1,34 @@
+{%extends "headerfooter.html"%}
+
+{% block body %}
+
+<div class = "container" style="padding-top: 5%; padding-bottom: 5%; text-align:center">
+    <div class="row" style="padding-top: 5%">
+        <div class="col-2" >
+        </div>
+        <div class="col-7" >
+        <h1 style="text-align:center">Error 500</h1>
+        </div>
+        <div class="col-3" >
+        </div>
+    </div>
+    <!--<div class="row" style="padding-top: 5%">
+        <div class="col-2" ></div>
+        <div class="col-7" >
+            <img src="{{ url_for('static', filename='img/aspyre-gui_500_mini.png')}}" alt="Error 500" class="center-image">
+        </div>
+        <div class="col-3" ></div>
+    </div>-->
+    <div class="row" style="padding-top: 5%">
+        <div class="col-2" >
+        </div>
+        <div class="col-7" >
+        <p>Whoops! Sorry, it looks like I'm not working...</p>
+        <a href="{{url_for('index')}}">Try to go back to the main page.</a>
+        </div>
+        <div class="col-3" >
+        </div>
+    </div>
+</div>
+
+{% endblock %}

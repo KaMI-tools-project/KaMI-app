@@ -1,0 +1,138 @@
+{%extends "headerfooter.html"%}
+
+{% block body %}
+
+    {% with errors = get_flashed_messages(category_filter=["error"]) %}
+      {% if errors %}
+        <ul class=flashes>
+        {% for msg in errors %}
+          <li style="color: firebrick">{{ msg }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+<div class="container">
+    <div class="row" style="padding-top: 5%">
+        <div class="col-2" ></div>
+        <div class="col-7" >
+            <h1 style="text-align:center">Welcome to KaMI App!</h1>
+            <p></p>
+            <h5 style="color: #306990; text-align: center; padding-top:3%;">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</h5>
+        </div>
+        <div class="col-3" ></div>
+    </div>
+    <!--<div class="row" style="padding-top: 5%">
+        <div class="col-2" ></div>
+        <div class="col-7" >
+        <img src="{{ url_for('static', filename='img/aspyre-gui_mini.png')}}" alt="Aspyre GUI Logo" class="center-image">
+        </div>
+        <div class="col-3" ></div>
+    </div>-->
+</div>
+
+<!--<div class="container">
+    <div class="row" style="padding-top: 5%">
+        <div class="col-2" ></div>
+        <div class="col-7" >
+        <h2 style="text-align:center">Instructions</h2>
+            <p></p>
+            <ul>
+                <li><h5 style="padding-top:1%;">Use the Transkribus export option to download a ZIP file containing image files, ALTO XML files and a METS XML file</h5></li>
+                <li><h5 style="padding-top:1%;">[opt] You may need to remove the images from the ZIP file in order to remain under the size limitation we were forced to set on this service online - initially checking the "Export Image" option on Transkribus, however, is necessary in order to get a properly documented METS XML file...</h5></li>
+                <li><h5 style="padding-top:1%;">Upload the ZIP file here and hit "Transform" to run Aspyre GT on your data</h5></li>
+                <li><h5 style="padding-top:1%;">Save the returned ZIP file: it contains ALTO XML files directly compatible with eScriptorium</h5></li>
+                <li><h5 style="padding-top: 2%"><a href="https://github.com/alix-tz/aspyre-gt#instructions" target="_blank" class="a_inline">Find more detailed instructions</a></h5></li>
+            </ul>
+        </div>
+        <div class="col-3" ></div>
+    </div>
+</div>-->
+
+<div class="container" style="padding-top: 3%;">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-7">
+            
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
+
+<div class="container" style="padding-top:3%;">
+    <div class="row">
+        <div class="col-2" >
+        </div>
+        <div class="col-7 upload-zone" style="text-align:center;" >
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <div class="input-file-container">
+                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a ZIP file: </label>
+                    <input class="input-file" oninput="filesize(this)" type="file" name="zipfile" id="zipfile" style="text-align:center;">
+                </div>
+                <div class="form-group row">
+				    <label for="scenario" class="col-sm-6 col-form-label">Scenario</label>
+				    <div class="col-sm-9">
+				    	<select name="scenario" id="scenario">
+                            <option value="pdfalto">PDFALTO</option>
+                            <option value="tkb">Transkribus</option>
+				    	</select>
+				    </div>
+                </div>
+                <!--<p class="file-return"></p>-->
+                <!--<div class="input-group-append">-->
+                <button style="margin-top: 3%; background-color: #306990; border-color: #306990;" class="btn btn-primary" type="submit">Transform</button>
+                <!--</div>-->
+            </form>
+        </div>
+        <div class="col-3" >
+        </div>
+    </div>
+</div>
+
+<!--<div class="container">
+    <div class="row" style="padding-top: 5%">
+        <div class="col-2" >
+        </div>
+        <div class="col-7" >
+        <h2 style="text-align:center">General Information</h2>
+            <p></p>
+            <ul>
+                <li><h5 style="padding-top:1%;"><a href="https://github.com/alix-tz/aspyre-gt" target="_blank" class="a_inline">Find more information on Aspyre</a></h5></li>
+                <li><h5 style="padding-top:1%;">Aspyre GT and Aspyre GUI are developed by <a href="https://alix-tz.github.io/" target="_blank" class="a_inline">Alix Chagué</a></h5></li>
+                <li><h5 style="padding-top:1%;">You can <a href="https://github.com/alix-tz/aspyre-gt/issues/new" target="_blank" class="a_inline">contribute to the project</a></h5></li>
+            </ul>
+        </div>
+        <div class="col-3" >
+        </div>
+    </div>
+</div>-->
+
+{% endblock %}
+
+{% block script %}
+<!-- from http://www.trucsweb.com/tutoriels/css/bootstrap4-file_browser/ -->
+<script>
+    function filesize(elem){
+        document.cookie = `filesize=${elem.files[0].size}`
+    }
+
+    document.querySelector("html").classList.add('js');
+        var fileInput  = document.querySelector( ".input-file" ),
+            button     = document.querySelector( ".input-file-trigger" ),
+            the_return = document.querySelector(".file-return");
+
+        button.addEventListener( "keydown", function( event ) {
+            if ( event.keyCode == 13 || event.keyCode == 32 ) {
+                fileInput.focus();
+            }
+        });
+        button.addEventListener( "click", function( event ) {
+           fileInput.focus();
+           return false;
+        });
+        fileInput.addEventListener( "change", function( event ) {
+            the_return.innerHTML = this.value;
+        });
+</script>
+
+{% endblock %}
