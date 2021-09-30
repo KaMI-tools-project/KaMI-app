@@ -1,14 +1,12 @@
 import glob
 import os
 import random
-from typing_extensions import Required
+#from typing_extensions import Required
 
 from flask import render_template, request, send_file, send_from_directory, url_for, redirect, flash
-from wtforms import Form, BooleanField, StringField, validators
 from werkzeug.utils import secure_filename
 
 from .app import app
-#from .aspyrelib import aspyre
 
 from kami.Kami import Kami
 
@@ -45,6 +43,7 @@ def index():
     if request.method == "POST":
         kami_form = kamiForm(request.form)
         if kami_form:
+            print("starting evaluation")
             kevaluator = Kami(
                 [kami_form.reference, kami_form.prediction], 
                 verbosity=app.config["KAMI_OPT_VERB"], 
@@ -54,5 +53,7 @@ def index():
                 apply_transforms=kami_form.options)
             score_board = kevaluator.scores.board
         else:
+            print("cannot perform evaluation")
             error = "Invalid Form"
-    return render_template('page/index.html', title="KaMI App | Upload", kami_version = app.config['KAMI_VERSION'], error=error, score_board=score_board)
+    return render_template('page/index.html', title="KaMI App | Upload", kami_version = app.config['KAMI_VERSION'], error=error)#, score_board=score_board)
+
