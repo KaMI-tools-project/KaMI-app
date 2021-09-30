@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <title>{{ title }}</title>
       {% include "partials/css.html" %}
       {% include "partials/metadata.html" %}
@@ -26,12 +27,17 @@
           .file-field.big-2 .file-path-wrapper .file-path {
           height: 3.5rem; }
 
-          #top-navbar {
+          #top-navbar, #bottom-footer {
               background-color: #AA0018; 
               font-weight: bold; 
               color:white;
           }
+
           #top-navbar a, #top-navbar a:visited, #top-navbar  a:link,#top-navbar  a:hover {
+              color:white;
+          }
+
+          #bottom-footer a, #bottom-footer a:visited, #bottom-footer a:link, #bottom-footer a:hover {
               color:white;
           }
 
@@ -88,6 +94,30 @@
             </div>
         </div>
       </div>
+
+    <!-- Footer -->
+<footer class="page-footer font-small py-lg-5 py-md-3 py-sm-3 py-3" id="bottom-footer">
+  <!-- Footer Links -->
+  <div class="container-fluid text-center text-md-left">
+    <!-- Grid row -->
+    <div class="row mt-2 mb-1">
+      <!-- Grid column -->
+      <div class="col-lg-3 col-md-2 col-sm-1 col-0"></div>
+      <!-- Grid column -->
+      <div class="col-lg-6 col-md-4 col-sm-5 col-6 text-center">
+        <ul class="list-unstyled text-center">
+            <a href="https://gitlab.inria.fr/dh-projects/kami/kami-lib" target="_blank"><i class="fab fa-gitlab"></i></i> KaMI</a>
+        </ul>
+      </div>
+      <!-- Grid column -->
+      <div class="col-lg-3 col-md-2 col-sm-1 col-0"></div>
+    </div>
+    <!-- Grid row -->
+  </div>
+  </footer>
+  <!-- Footer Links -->
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

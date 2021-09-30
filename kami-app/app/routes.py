@@ -78,6 +78,12 @@ def make_dataframe(score_board, reference):
     titles=[df_metrics.columns.values]
     return tables, titles
 
+
+def correct_style(tables):
+    tables = [table.replace("""<table border="1" class="dataframe data">""", """<table class="dataframe data table table-hover table-bordered">""") for table in tables]
+    tables = [table.replace("""<tr style="text-align: right;">""", """<tr>""") for table in tables]
+    return tables
+
     
 
 # ROUTES ##############################################################################################################
@@ -103,5 +109,8 @@ def index():
         else:
             print("cannot perform evaluation")
             error = "Invalid Form"
+
+        tables = correct_style(tables)
+
     return render_template('page/index.html', title="KaMI App | Upload", kami_version = app.config['KAMI_VERSION'], error=error, tables=tables, titles=titles)
 
