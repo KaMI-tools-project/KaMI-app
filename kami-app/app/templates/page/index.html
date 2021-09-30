@@ -18,7 +18,7 @@
         <div class="col-7" >
             <h1 style="text-align:center">Welcome to KaMI App!</h1>
             <p></p>
-            <h5 style="color: #306990; text-align: center; padding-top:3%;">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</h5>
+            <h5 style="text-align: center; padding-top:3%;">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</h5>
         </div>
         <div class="col-3" ></div>
     </div>
@@ -66,22 +66,36 @@
         <div class="col-7 upload-zone" style="text-align:center;" >
             <form action="/" method="POST" enctype="multipart/form-data">
                 <div class="input-file-container">
-                    <label tabindex="0" for="my-file" class="input-file-trigger">Select a ZIP file: </label>
-                    <input class="input-file" oninput="filesize(this)" type="file" name="zipfile" id="zipfile" style="text-align:center;">
+                    <div class="form-group row mx-3">
+                        <label class="" for="reference">Reference</label>
+                        <textarea name="reference" class="form-control" id="reference" rows="5" placeholder="Paste the expected transcription..." required></textarea>
+                    </div>
+                    <div class="form-group row mx-3">
+                        <label class="" for="prediction">Prediction</label>
+                        <textarea name="prediction" class="form-control" id="prediction" rows="5" placeholder="Paste the transcription produced by the evaluated model..." required></textarea>
+                    </div>
                 </div>
-                <div class="form-group row">
-				    <label for="scenario" class="col-sm-6 col-form-label">Scenario</label>
-				    <div class="col-sm-9">
-				    	<select name="scenario" id="scenario">
-                            <option value="pdfalto">PDFALTO</option>
-                            <option value="tkb">Transkribus</option>
-				    	</select>
-				    </div>
+                <div class="form-group row mx-3">
+                    <div class="container pl-5">
+                        <div class="form-group row">
+                            <input class="form-check-input" type="checkbox" name="optdigit" id="optdigit">
+                            <label class="form-check-label" for="optdigit">Ignore all digits</label>
+                        </div>
+                        <div class="form-group row">
+                            <input class="form-check-input" type="checkbox" name="optcase" id="optcase">
+                            <label class="form-check-label" for="optcase">Ignore text case (all lower)</label>
+                        </div>
+                        <div class="form-group row">
+                            <input class="form-check-input" type="checkbox" name="optponct" id="optponct">
+                            <label class="form-check-label" for="optponct">Ignore the punctuation</label>
+                        </div>
+                        <div class="form-group row">
+                            <input class="form-check-input" type="checkbox" name="optdiac" id="optdiac">
+                            <label class="form-check-label" for="optdiac">Ignore diacritical signs</label>
+                        </div>
+                    </div>
                 </div>
-                <!--<p class="file-return"></p>-->
-                <!--<div class="input-group-append">-->
-                <button style="margin-top: 3%; background-color: #306990; border-color: #306990;" class="btn btn-primary" type="submit">Transform</button>
-                <!--</div>-->
+                <button style="margin-top: 3%; background-color: #780018; border-color: #780018;" class="btn btn-primary" type="submit">Compare</button>
             </form>
         </div>
         <div class="col-3" >
@@ -89,27 +103,7 @@
     </div>
 </div>
 
-<!-- *** FIELD *** -->
-<div class="container" style="padding-top:3%;">
-    <form>
-    <div class="row">
-        <div class="col-2" ></div>
-        <div class="form-group">
-            <label class="sr-only" for="reference">Reference</label>
-            <textarea name="reference" class="form-control" id="reference" rows="5" placeholder="The expected transcription..." required></textarea>
-        </div>
-        <div class="form-group">
-            <label class="sr-only" for="prediction">Reference</label>
-            <textarea name="prediction" class="form-control" id="prediction" rows="5" placeholder="The transcription produced by the evaluated model..." required></textarea>
-        </div>
-        <div class="col-2" ></div>
-    </div>
-    <div class="row">
-        <button type="submit" class="btn btn-cta-secondary px-3 py-2">Evaluer</button>
-    </div>
-    </form>
-</div>
-        
+       
 
 <!--<div class="container">
     <div class="row" style="padding-top: 5%">
@@ -133,7 +127,7 @@
 
 {% block script %}
 <!-- from http://www.trucsweb.com/tutoriels/css/bootstrap4-file_browser/ -->
-<script>
+<!--<script>
     function filesize(elem){
         document.cookie = `filesize=${elem.files[0].size}`
     }
@@ -155,6 +149,6 @@
         fileInput.addEventListener( "change", function( event ) {
             the_return.innerHTML = this.value;
         });
-</script>
+</script>-->
 
 {% endblock %}
