@@ -22,32 +22,8 @@
         </div>
         <div class="col-3" ></div>
     </div>
-    <!--<div class="row" style="padding-top: 5%">
-        <div class="col-2" ></div>
-        <div class="col-7" >
-        <img src="{{ url_for('static', filename='img/aspyre-gui_mini.png')}}" alt="Aspyre GUI Logo" class="center-image">
-        </div>
-        <div class="col-3" ></div>
-    </div>-->
 </div>
 
-<!--<div class="container">
-    <div class="row" style="padding-top: 5%">
-        <div class="col-2" ></div>
-        <div class="col-7" >
-        <h2 style="text-align:center">Instructions</h2>
-            <p></p>
-            <ul>
-                <li><h5 style="padding-top:1%;">Use the Transkribus export option to download a ZIP file containing image files, ALTO XML files and a METS XML file</h5></li>
-                <li><h5 style="padding-top:1%;">[opt] You may need to remove the images from the ZIP file in order to remain under the size limitation we were forced to set on this service online - initially checking the "Export Image" option on Transkribus, however, is necessary in order to get a properly documented METS XML file...</h5></li>
-                <li><h5 style="padding-top:1%;">Upload the ZIP file here and hit "Transform" to run Aspyre GT on your data</h5></li>
-                <li><h5 style="padding-top:1%;">Save the returned ZIP file: it contains ALTO XML files directly compatible with eScriptorium</h5></li>
-                <li><h5 style="padding-top: 2%"><a href="https://github.com/alix-tz/aspyre-gt#instructions" target="_blank" class="a_inline">Find more detailed instructions</a></h5></li>
-            </ul>
-        </div>
-        <div class="col-3" ></div>
-    </div>
-</div>-->
 
 <div class="container" style="padding-top: 3%;">
     <div class="row">
@@ -72,7 +48,7 @@
                     </div>
                     <div class="form-group row mx-3">
                         <label class="" for="prediction">Prediction</label>
-                        <textarea name="prediction" class="form-control" id="prediction" rows="5" placeholder="Paste the transcription produced by the evaluated model..." required></textarea>
+                        <textarea name="prediction" class="form-control" id="prediction" rows="5" placeholder="Paste the transcription produced by the model you wish to evaluates..." required></textarea>
                     </div>
                 </div>
                 <div class="form-group row mx-3">
@@ -117,52 +93,10 @@
 </div>
 {% endif %}
 
-       
-
-<!--<div class="container">
-    <div class="row" style="padding-top: 5%">
-        <div class="col-2" >
-        </div>
-        <div class="col-7" >
-        <h2 style="text-align:center">General Information</h2>
-            <p></p>
-            <ul>
-                <li><h5 style="padding-top:1%;"><a href="https://github.com/alix-tz/aspyre-gt" target="_blank" class="a_inline">Find more information on Aspyre</a></h5></li>
-                <li><h5 style="padding-top:1%;">Aspyre GT and Aspyre GUI are developed by <a href="https://alix-tz.github.io/" target="_blank" class="a_inline">Alix Chagué</a></h5></li>
-                <li><h5 style="padding-top:1%;">You can <a href="https://github.com/alix-tz/aspyre-gt/issues/new" target="_blank" class="a_inline">contribute to the project</a></h5></li>
-            </ul>
-        </div>
-        <div class="col-3" >
-        </div>
-    </div>
-</div>-->
+    
 
 {% endblock %}
 
 {% block script %}
-<!-- from http://www.trucsweb.com/tutoriels/css/bootstrap4-file_browser/ -->
-<!--<script>
-    function filesize(elem){
-        document.cookie = `filesize=${elem.files[0].size}`
-    }
-
-    document.querySelector("html").classList.add('js');
-        var fileInput  = document.querySelector( ".input-file" ),
-            button     = document.querySelector( ".input-file-trigger" ),
-            the_return = document.querySelector(".file-return");
-
-        button.addEventListener( "keydown", function( event ) {
-            if ( event.keyCode == 13 || event.keyCode == 32 ) {
-                fileInput.focus();
-            }
-        });
-        button.addEventListener( "click", function( event ) {
-           fileInput.focus();
-           return false;
-        });
-        fileInput.addEventListener( "change", function( event ) {
-            the_return.innerHTML = this.value;
-        });
-</script>-->
 
 {% endblock %}
