@@ -75,7 +75,7 @@ def make_dataframe(score_board, reference):
         df_metrics = pd.DataFrame.from_dict(metrics, orient='index')
     
     tables=[df_metrics.to_html(classes="data")]
-    titles=[df.columns.values]
+    titles=[df_metrics.columns.values]
     return tables, titles
 
     
@@ -99,7 +99,7 @@ def index():
                 percent=app.config["KAMI_OPT_PERC"],
                 round_digits=app.config["KAMI_OPT_ROUND"],
                 apply_transforms=kami_form.options)
-            tables, titles = make_dataframe(kevaluator.scores.board)
+            tables, titles = make_dataframe(kevaluator.scores.board, kami_form.reference)
         else:
             print("cannot perform evaluation")
             error = "Invalid Form"
