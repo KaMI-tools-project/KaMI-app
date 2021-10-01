@@ -73,6 +73,29 @@ def make_dataframe(score_board, reference):
         df_metrics = pd.DataFrame.from_dict(metrics)
     except:
         df_metrics = pd.DataFrame.from_dict(metrics, orient='index')
+
+    displayable_titles = {0: "Default",
+                          "0": "Default",
+                          "default":"Default",
+                          "non_digits":"Ignoring digits",
+                          "lowercase":"Ignoring case",
+                          "remove_punctuation":"Ignoring punctuation",
+                          "remove_diacritics":"Ignoring diacritics",
+                          "all_transforms":"Combining all options"}
+    displayable_index = {"cer":"Char. Error Rate (CER)", "wer":"Word Error Rate (WER)",
+                        "levensthein_distance_char":"Levensthein Distance (Char.)", 
+                        "levensthein_distance_words":"Levensthein Distance (Words)", 
+                        "hamming_distance":"Hamming Distance", 
+                        "wacc":"Word Accuracy (Wacc)", 
+                        "mer":"Match Error Rate (MER)", 
+                        "cil":"Char. Information Lost (CIL)", 
+                        "cip":"Char. Information Preserved (CIP)", 
+                        "hits":"Hits", 
+                        "substitutions":"Substitutions", 
+                        "deletions":"Deletions", 
+                        "insertions":"Insertions"}
+
+    df_metrics.rename(columns=displayable_titles, index=displayable_index, inplace=True)
     
     tables=[df_metrics.to_html(classes="data")]
     titles=[df_metrics.columns.values]
@@ -83,7 +106,6 @@ def correct_style(tables):
     tables = [table.replace("""<table border="1" class="dataframe data">""", """<table class="dataframe data table table-hover table-bordered">""") for table in tables]
     tables = [table.replace("""<tr style="text-align: right;">""", """<tr>""") for table in tables]
     return tables
-
     
 
 # ROUTES ##############################################################################################################
