@@ -77,42 +77,35 @@
       </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-md navbar-light justify-content-between" id="top-navbar" style="">
-        <a class="navbar-brand" href="{{url_for('index')}}">KaMI</a>
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link disabled" style="color: #F6E5E7;" href="#">Running with KaMI v. {{ kami_version }}</a>
-        </li>
-      </ul>
-      </nav>
-        <div class="row">
-            <div class="col">
-            {% block body %}{% endblock %}
-            </div>
-        </div>
-      </div>
-
-    <!-- Footer -->
-<footer class="page-footer font-small py-4" id="bottom-footer">
-  <!-- Footer Links -->
-  <div class="container-fluid text-center text-md-left">
-    <!-- Grid row -->
-    <div class="row mt-2 mb-1">
-      <!-- Grid column -->
-      <div class="col-lg-3 col-md-2 col-sm-1 col-0"></div>
-      <!-- Grid column -->
-      <div class="col-lg-6 col-md-4 col-sm-5 col-6 text-center">
-        <ul class="list-unstyled text-center">
-            <a href="https://gitlab.inria.fr/dh-projects/kami/kami-lib" target="_blank"><i class="fab fa-gitlab"></i></i> KaMI</a>
+    <header class="navbar navbar-expand navbar-drak flex-column flex-md-row bd-navbar pb-3" id="top-navbar">
+      <div class="navbar-nav-scroll">
+        <ul class="navbar-nav bd-navbar-nav flex-row">
+          <li class="nav-item">
+            <a class="navbar-brand" href="{{url_for('index')}}">KaMI</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" style="color: #F6E5E7;" href="#">Running with kamilib {{ kami_version }}</a>
+          </li>
         </ul>
       </div>
-      <!-- Grid column -->
-      <div class="col-lg-3 col-md-2 col-sm-1 col-0"></div>
+    </header>
+
+
+    <div class="row">
+      <div class="col-12">
+        {% block body %}{% endblock %}
+      </div>
     </div>
-    <!-- Grid row -->
-  </div>
-  </footer>
-  <!-- Footer Links -->
+
+    <!-- Footer -->
+    <footer class="footer py-5 text-center" id="bottom-footer">
+      <div class="container">
+        <span class="text-muted">
+          <a href="https://gitlab.inria.fr/dh-projects/kami/kami-lib" target="_blank">
+            <i class="fab fa-gitlab"></i></i> KaMI-Lib on Gitlab</a>
+        </span>
+      </div>
+    </footer>
 
 
     <!-- Optional JavaScript -->
