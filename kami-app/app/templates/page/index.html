@@ -12,54 +12,37 @@
       {% endif %}
     {% endwith %}
 
-<div class="container">
-    <div class="row" style="padding-top: 5%">
-        <div class="col-2" ></div>
-        <div class="col-7" >
-            <h1 style="text-align:center">Welcome to KaMI App!</h1>
-            <p></p>
-            <h5 style="text-align: center; padding-top:3%;">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</h5>
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1 class="jumbotron-heading">Welcome to KaMI App!</h1>
+          <p class="lead text-muted">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</p>
+          <p>
+            <a href="https://colab.research.google.com/drive/1nk0hNtL9QTO5jczK0RPEv9zF3nP3DpOc?usp=sharing" class="btn btn btn-outline-light my-2"><i class="fab fa-google-drive"></i> Do more with KaMI</a>
         </div>
-        <div class="col-3" ></div>
-    </div>
-</div>
+      </section>
 
-
-<div class="container" style="padding-top: 3%;">
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-7">
-            
-        </div>
-        <div class="col-2"></div>
-    </div>
-</div>
-
-<div class="container" style="padding-top:3%;">
-    <div class="row">
-        <div class="col-2" >
-        </div>
-        <div class="col-7 upload-zone" style="text-align:center;" >
-            <form action="/" method="POST" enctype="multipart/form-data">
-                <div class="input-file-container">
+      <section class="mb-5">
+        <div class="container form-zone">
+            <form action="/" method="POST">
+                <div class="container">
                     <div class="form-group row mx-3">
                         <label class="" for="reference">Reference</label>
-                        <textarea name="reference" class="form-control" id="reference" rows="5" placeholder="Paste the expected transcription..." required></textarea>
+                        <textarea name="reference" class="form-control" id="reference" rows="6" placeholder="Paste the expected transcription..." required></textarea>
                     </div>
                     <div class="form-group row mx-3">
                         <label class="" for="prediction">Prediction</label>
-                        <textarea name="prediction" class="form-control" id="prediction" rows="5" placeholder="Paste the transcription produced by the model you wish to evaluates..." required></textarea>
+                        <textarea name="prediction" class="form-control" id="prediction" rows="6" placeholder="Paste the transcription produced by the model you wish to evaluate..." required></textarea>
                     </div>
                 </div>
                 <div class="form-group row mx-3">
-                    <div class="container pl-5">
+                    <div class="container ml-5">
                         <div class="form-group row">
                             <input class="form-check-input" type="checkbox" name="optdigit" id="optdigit">
                             <label class="form-check-label" for="optdigit">Ignore all digits</label>
                         </div>
                         <div class="form-group row">
                             <input class="form-check-input" type="checkbox" name="optcase" id="optcase">
-                            <label class="form-check-label" for="optcase">Ignore text case (all lower)</label>
+                            <label class="form-check-label" for="optcase">Ignore text case (all in lower case)</label>
                         </div>
                         <div class="form-group row">
                             <input class="form-check-input" type="checkbox" name="optponct" id="optponct">
@@ -71,28 +54,27 @@
                         </div>
                     </div>
                 </div>
-                <button style="margin-top: 3%; background-color: #780018; border-color: #780018;" class="btn btn-primary" type="submit">Compare</button>
+                <div class="text-center">
+                    <button style="margin-top: 3%; background-color: #780018; border-color: #780018;" class="btn btn-primary" type="submit">Compare</button>
+                </div>
             </form>
         </div>
-        <div class="col-3" >
-        </div>
-    </div>
-</div>^
-{% if tables and titles %}
-<div class="container pb-5 mb-5">
-    <div class="row" style="padding-top: 5%">
-        <div class="col-2" ></div>
-        <div class="table-responsive">
-            {% for table in tables %}
-              {{ titles[loop.index] }}
-              {{ table|safe }}
-            {% endfor %}
-        </div>
-        <div class="col-2" ></div>
-    </div>
-</div>
-{% endif %}
+      </section>
 
+      <section>
+        {% if tables and titles %}
+        <div class="container pb-5 mb-5">
+            <div class="row">
+                <div class="table-responsive">
+                    {% for table in tables %}
+                      {{ titles[loop.index] }}
+                      {{ table|safe }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}  
+      </section>
     
 
 {% endblock %}
