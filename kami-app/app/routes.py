@@ -134,5 +134,5 @@ def index():
 
         tables = correct_style(tables)
 
-    return render_template('page/index.html', title="KaMI App | Upload", kami_version = app.config['KAMI_VERSION'], error=error, tables=tables, titles=titles)
+    return render_template('page/index.html', title="KaMI App", kami_version = app.config['KAMI_VERSION'], error=error, tables=tables, titles=titles)
 
