@@ -1,4 +1,13 @@
+<!-- badges -->
+[![Python Version](https://img.shields.io/badge/python-3.7-blue)](#) [![GitLab license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://gitlab.inria.fr/dh-projects/kami/Kami-app/master/LICENSE)  [![Deployed on Heroku](https://img.shields.io/badge/deployed%20on-heroku-%23664986)](https://kami-app.herokuapp.com/) 
+
+<!-- end of badges -->
+
 # Kramin App
+
+## Go check the demo application on heroku
+
+➡️ https://kami-app.herokuapp.com/
 
 ## Run the app locally
 
