@@ -1,124 +1,57 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
+    <title>{{ title }}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!--<link rel="icon" type="image/png" href="../static/favicon.ico" />-->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.ico')}}">
+    {% include "partials/metadata.html" %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <title>{{ title }}</title>
-      {% include "partials/css.html" %}
-      {% include "partials/metadata.html" %}
-      <style>
-          .a_inline {
-              color: #AA0018;
-          }
-
-          /*
-          .file-field.medium .file-path-wrapper {
-          height: 3rem; }
-          .file-field.medium .file-path-wrapper .file-path {
-          height: 2.8rem; }
-
-          .file-field.big-2 .file-path-wrapper {
-          height: 3.7rem; }
-          .file-field.big-2 .file-path-wrapper .file-path {
-          height: 3.5rem; }
-          */
-
-          #top-navbar, #bottom-footer {
-              background-color: #AA0018; 
-              font-weight: bold; 
-              color:white;
-          }
-
-          #top-navbar a, #top-navbar a:visited, #top-navbar  a:link, #top-navbar  a:hover {
-              color:white;
-          }
-
-          #bottom-footer a, #bottom-footer a:visited, #bottom-footer a:link, #bottom-footer a:hover {
-              color:white;
-          }
-
-          /*
-          .file-return {
-            margin: 0;
-          }
-          .file-return:not(:empty) {
-            margin: 1em 0;
-          }
-          .js .file-return {
-            font-style: italic;
-            font-size: .9em;
-            font-weight: bold;
-          }
-          .js .file-return:not(:empty):before {
-            content: "Selected file: ";
-            font-style: normal;
-            font-weight: normal;
-          }*/
-
-        .form-zone {
-          border:solid;
-          border-color:#D10047;
-          border-width:thin;
-          box-shadow: 2px 2px 10px #960018;
-        }
-
-        /*.center-image {
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
-          width: 50%;
-        }*/
-
-        .jumbotron {
-          background-color: #fff;
-        }
-
-      </style>
-  </head>
-  <body>
-    <header class="navbar navbar-expand navbar-drak flex-column flex-md-row bd-navbar pb-3" id="top-navbar">
-      <div class="navbar-nav-scroll">
+    {% include "partials/css.html" %}
+</head>
+<body>
+<header class="navbar navbar-expand navbar-drak flex-column flex-md-row bd-navbar pb-3" id="top-navbar">
+    <div class="navbar-nav-scroll">
         <ul class="navbar-nav bd-navbar-nav flex-row">
-          <li class="nav-item">
-            <a class="navbar-brand" href="{{url_for('index')}}">KaMI</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" style="color: #F6E5E7;" href="#">Running with kamilib {{ kami_version }}</a>
-          </li>
+            <li class="nav-item">
+                <a class="navbar-brand" href="{{url_for('index')}}">KaMI</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" style="color: #F6E5E7;" href="#">Running with kamilib {{ kami_version }}</a>
+            </li>
         </ul>
-      </div>
-    </header>
-
-
-    <div class="row">
-      <div class="col">
-        {% block body %}{% endblock %}
-      </div>
     </div>
+</header>
 
 
-    <!-- Footer -->
-    <footer class="footer py-5 text-center" id="bottom-footer">
-      <div class="container">
+<div class="row">
+    <div class="col">
+        {% block body %}{% endblock %}
+    </div>
+</div>
+
+
+<!-- Footer -->
+ <footer class="py-5 text-center" id="bottom-footer">
+    <div class="container">
         <span class="text-muted">
           <a href="https://gitlab.inria.fr/dh-projects/kami/kami-lib" target="_blank">
             <i class="fab fa-gitlab"></i></i> KaMI-Lib on Gitlab</a>
         </span>
-      </div>
-    </footer>
+    </div>
+</footer>
 
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  {% block script%}{% endblock %}
-  </body>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{% block script%}{% endblock %}
+</body>
 </html>
