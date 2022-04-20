@@ -16,24 +16,24 @@
 
     <section class="jumbotron text-center pb-2">
         <div class="container">
-          <h1 class="jumbotron-heading">Welcome to KaMI App!</h1>
-          <p class="lead text-muted">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</p>
-          <p>
-            <a href="https://colab.research.google.com/drive/1nk0hNtL9QTO5jczK0RPEv9zF3nP3DpOc?usp=sharing" class="btn btn btn-outline-light my-2"><i class="fab fa-google-drive"></i> Do more with KaMI</a>
+            <h1 class="jumbotron-heading">Welcome to KaMI App!</h1>
+            <p class="lead text-muted">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</p>
+            <p>
+                <a href="https://colab.research.google.com/drive/1nk0hNtL9QTO5jczK0RPEv9zF3nP3DpOc?usp=sharing" class="btn btn btn-outline-light my-2"><i class="fab fa-google-drive"></i> Do more with KaMI</a>
         </div>
-      </section>
+    </section>
 
-      <section class="mb-5">
+    <section class="mb-5">
         <div class="container form-zone py-4">
             <form action="/" method="POST">
                 <div class="container">
                     <div class="form-group row mx-3">
                         <label class="" for="reference">Reference</label>
-                        <textarea name="reference" class="form-control" id="reference" rows="6" placeholder="Paste the expected transcription..." ondrop="dropHandler(event);" required></textarea>
+                        <textarea name="reference" class="form-control" id="reference" rows="6" placeholder="Drag & Drop or Paste the expected transcription..." required></textarea>
                     </div>
                     <div class="form-group row mx-3">
                         <label class="" for="prediction">Prediction</label>
-                        <textarea name="prediction" class="form-control" id="prediction" rows="6" placeholder="Paste the transcription produced by the model you wish to evaluate..." ondrop="dropHandler(event);" required></textarea>
+                        <textarea name="prediction" class="form-control" id="prediction" rows="6" placeholder="Drag & Drop or Paste the transcription produced by the model you wish to evaluate..." required></textarea>
                     </div>
                 </div>
                 <div class="form-group row mx-3">
@@ -61,55 +61,56 @@
                 </div>
             </form>
         </div>
-      </section>
-
-      <section>
+    </section>
+    <br>
+    <br>
+    <section>
         {% if tables and titles %}
-        <div class="container pb-3 mb-2">
-            <div class="row">
-                <div class="table-responsive">
-                    {% for table in tables %}
-                      {{ titles[loop.index] }}
-                      {{ table|safe }}
-                    {% endfor %}
+            <div class="container pb-3 mb-2">
+                <div class="row">
+                    <div class="table-responsive">
+                        {% for table in tables %}
+                            {{ titles[loop.index] }}
+                            {{ table|safe }}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        </div>
-        {% endif %}  
-      </section>
+        {% endif %}
+    </section>
 
-      <section>
+    <section>
         {% if tables and titles %}
-        <div class="container pb-3 mb-2">
-            <h3>Understand the metrics:</h3>
-            <ul>
-                <li><span class="font-weight-bold">Levensthein Distance (Char.):</span> Levenshtein distance at character level.</li>
-                <li><span class="font-weight-bold">Levensthein Distance (Words):</span> Levenshtein distance at word level.</li>
-                <li><span class="font-weight-bold">Hamming Distance:</span> a score if the strings' lengths match but their content is different; Ø if the strings' lengths don't match.</li>
-            </ul>
-            <ul>
-                <li><span class="font-weight-bold">WER:</span> Word Error Rate, proportion of words bearing at least one recognition error.</li>
-                <li><span class="font-weight-bold">CER:</span> Character Error Rate, proportion of characters erroneously transcribed.</li>
-                <li><span class="font-weight-bold">Wacc:</span> Word Accuracy, proportion of words bearing no recognition error.</li>
-            </ul>
-            <ul>
-                <li><span class="font-weight-bold">Match Error Rate:</span> metric borrowed from Speech Recognition</li>
-                <li><span class="font-weight-bold">Char. Information Lost:</span> metric borrowed from Speech Recognition</li>
-                <li><span class="font-weight-bold">Char. Information Preserve:</span> metric borrowed from Speech Recognition</li>
-            </ul>
-            <ul>
-                <li><span class="font-weight-bold">Hits:</span> number of characters identical between the reference and the prediction.</li>
-                <li><span class="font-weight-bold">Substitutions:</span> number of substitutions (a character replaced by another) necessary to make the prediction match the reference</li>
-                <li><span class="font-weight-bold">Deletions:</span> number of deletions (a character is removed) necessary to make the prediction match the reference</li>
-                <li><span class="font-weight-bold">Insertions:</span> number of insertions (a character is added) necessary to make the prediction match the reference</li>
-            </ul>
-        </div>
-        {% endif %}  
-      </section>
-    
+            <div class="container pb-3 mb-2">
+                <h3>Understand the metrics:</h3>
+                <ul>
+                    <li><span class="font-weight-bold">Levensthein Distance (Char.):</span> Levenshtein distance at character level.</li>
+                    <li><span class="font-weight-bold">Levensthein Distance (Words):</span> Levenshtein distance at word level.</li>
+                    <li><span class="font-weight-bold">Hamming Distance:</span> a score if the strings' lengths match but their content is different; Ø if the strings' lengths don't match.</li>
+                </ul>
+                <ul>
+                    <li><span class="font-weight-bold">WER:</span> Word Error Rate, proportion of words bearing at least one recognition error.</li>
+                    <li><span class="font-weight-bold">CER:</span> Character Error Rate, proportion of characters erroneously transcribed.</li>
+                    <li><span class="font-weight-bold">Wacc:</span> Word Accuracy, proportion of words bearing no recognition error.</li>
+                </ul>
+                <ul>
+                    <li><span class="font-weight-bold">Match Error Rate:</span> metric borrowed from Speech Recognition</li>
+                    <li><span class="font-weight-bold">Char. Information Lost:</span> metric borrowed from Speech Recognition</li>
+                    <li><span class="font-weight-bold">Char. Information Preserve:</span> metric borrowed from Speech Recognition</li>
+                </ul>
+                <ul>
+                    <li><span class="font-weight-bold">Hits:</span> number of characters identical between the reference and the prediction.</li>
+                    <li><span class="font-weight-bold">Substitutions:</span> number of substitutions (a character replaced by another) necessary to make the prediction match the reference</li>
+                    <li><span class="font-weight-bold">Deletions:</span> number of deletions (a character is removed) necessary to make the prediction match the reference</li>
+                    <li><span class="font-weight-bold">Insertions:</span> number of insertions (a character is added) necessary to make the prediction match the reference</li>
+                </ul>
+            </div>
+        {% endif %}
+    </section>
+
 
 {% endblock %}
 
 {% block script %}
-
+<script src="{{ url_for('static', filename='js/dragAndDropFunc.min.js')}}"></script>
 {% endblock %}
