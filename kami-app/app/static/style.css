@@ -87,3 +87,40 @@ footer{
     background-color: var(--white-main);
 }
 
+
+.panel-title {
+  position: relative;
+}
+
+.panel-title:hover{
+    color: var(--red-main);
+}
+
+.panel-title::after {
+  content: "\f107";
+  color: #333;
+  top: -2px;
+  right: 0px;
+  position: absolute;
+  font-family: "FontAwesome"
+}
+
+.panel-title[aria-expanded="true"]::after {
+  content: "\f106";
+}
+
+.exact-match{
+    color:#3CB371;
+}
+
+.insertion{
+    color: #4169E1;
+}
+
+.delSubts{
+    color: #D2122E;
+}
+
+.clear {
+    color: white !important;
+}

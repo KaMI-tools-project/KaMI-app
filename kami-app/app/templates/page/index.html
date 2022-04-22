@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="text-center">
-                    <button style="margin-top: 3%; background-color: #780018; border-color: #780018;" class="btn btn-primary" type="submit">Compare</button>
+                    <button id="compare-btn" style="margin-top: 3%; background-color: #780018; border-color: #780018;" class="btn btn-primary" type="submit">Compare</button>
                 </div>
             </form>
         </div>
@@ -78,7 +78,61 @@
             </div>
         {% endif %}
     </section>
+    {% if tables and titles %}
+        <section>
+            <div class="container pb-3 mb-2">
+                <div class="panel-group" id="accordion">
 
+                    <!-- First Panel -->
+                    <div class="panel panel-default card">
+                        <div class="card-header panel-heading">
+                            <h3 class="panel-title" data-toggle="collapse" data-target="#collapseOne"><i class="fa fa-code-compare"></i> Show versus text</h3>
+                        </div>
+
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <div >
+                                    <fieldset>
+                                        <legend>Choose character operations:</legend>
+
+                                        <div>
+                                            <input type="checkbox" id="exact-match" name="exact-match"
+                                                   checked>
+                                            <label for="exact-match" style="color:#3CB371;">Exact match</label>
+                                        </div>
+
+                                        <div>
+                                            <input type="checkbox" id="insertion" name="insertion"
+                                                   checked>
+                                            <label for="insertion" style="color: #4169E1;">Insertion</label>
+                                        </div>
+
+                                        <div>
+                                            <input type="checkbox" id="delSubts" name="delSubts" checked>
+                                            <label for="delSubts" style="color: #D2122E;">Deletion/substition</label>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <br>
+                                <div id="vt-container">
+                                    <div class="row">
+                                        <div class="col"><b>REFERENCE</b><hr></div>
+                                        <div class="col"><b>COMPARAISON</b><hr></div>
+                                        <div class="col"><b>PREDICTION</b><hr></div>
+                                    </div>
+                                    <div class="row" class="card-body" style="max-height: 600px; overflow: auto">
+                                        <div class="col" id="vt-reference">{{ reference }}</div>
+                                        <div class="col" id="versus-text-container">{{ comparaison | join('') | safe }}</div>
+                                        <div class="col" id="vt-prediction">{{ prediction }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
     <section>
         {% if tables and titles %}
             <div class="container pb-3 mb-2">
@@ -107,10 +161,9 @@
             </div>
         {% endif %}
     </section>
-
-
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='js/dragAndDropFunc.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/dragAndDropFunc.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/versusTextFunc.min.js')}}"></script>
 {% endblock %}

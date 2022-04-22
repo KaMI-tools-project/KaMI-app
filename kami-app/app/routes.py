@@ -3,10 +3,11 @@ from datetime import datetime
 import glob
 import os
 import random
-
+from numba import jit
 from flask import render_template, request, send_file, send_from_directory, url_for, redirect, flash
 from kami.Kami import Kami
 import pandas as pd
+import numpy as np
 from werkzeug.utils import secure_filename
 
 from .app import app
@@ -52,6 +53,92 @@ class kamiForm():
                 elif field == "optdiac":
                     self.options.append("X")
             self.options = "".join(self.options)
+
+@jit(nopython=True, nogil=True)
+def compute_distance(reference, prediction, distance):
+    for char_pred in range(1, len(prediction) + 1):
+        for char_ref in range(1, len(reference) + 1):
+            delt = 1 if prediction[char_pred - 1] != reference[char_ref - 1] else 0
+            distance[char_pred, char_ref] = min(distance[char_pred - 1, char_ref - 1] + delt,
+                                                distance[char_pred - 1, char_ref] + 1,
+                                                distance[char_pred, char_ref - 1] + 1)
+    return distance
+
+def show_diff_color_html(reference: str, prediction: str) -> list:
+    """Display source and prediction in HTML format and color-code insertions (blue),
+    deletions (red), and exact words (green). based on Levensthein algorithm.
+
+    Example
+    --------
+    >>> show_diff_color_html("Chat", "Chien")
+    ["<span style='color:#3CB371'>C</span>", "<span style='color:#3CB371'>h</span>",
+    "<span style='color:#4169E1'>i</span>", "<span style='color:#4169E1'>e</span>",
+    "<span style='color:#D2122E'>a</span>", "<span style='color:#4169E1'>n</span>",
+    "<span style='color:#D2122E'>t</span>"]
+
+    Args:
+        reference (str): reference sequence
+        prediction (str): prediction sequence
+
+    Returns:
+        list: list of HTML tag with color code
+    """
+    result = []
+
+    # compute distance
+    """
+    distance = np.zeros((len(prediction) + 1, len(reference) + 1), dtype=int)
+    distance[0, 1:] = range(1, len(reference) + 1)
+    distance[1:, 0] = range(1, len(prediction) + 1)
+    for char_pred in range(1, len(prediction) + 1):
+        for char_ref in range(1, len(reference) + 1):
+            delt = 1 if prediction[char_pred - 1] != reference[char_ref - 1] else 0
+            distance[char_pred, char_ref] = min(distance[char_pred - 1, char_ref - 1] + delt,
+                                                distance[char_pred - 1, char_ref] + 1,
+                                                distance[char_pred, char_ref - 1] + 1)
+    """
+    distance = np.zeros((len(prediction) + 1, len(reference) + 1), dtype=int)
+    distance[0, 1:] = range(1, len(reference) + 1)
+    distance[1:, 0] = range(1, len(prediction) + 1)
+
+    distance = compute_distance(reference, prediction, distance)
+
+    # sequences alignment
+    # iterate the matrix's values from back to forward
+    char_pred = len(prediction)
+    char_ref = len(reference)
+    while char_pred > 0 and char_ref > 0:
+        diagonal = distance[char_pred - 1, char_ref - 1]
+        upper = distance[char_pred, char_ref - 1]
+        left = distance[char_pred - 1, char_ref]
+
+        # check back direction
+        direction = "\\" if diagonal <= upper and \
+                            diagonal <= left else "<-" \
+            if left < diagonal and \
+               left <= upper else "^"
+        char_pred = char_pred - 1 if direction == "<-" or direction == "\\" else char_pred
+        char_ref = char_ref - 1 if direction == "^" or direction == "\\" else char_ref
+
+        # Colorize characters with HTML tags
+        if (direction == "\\"):
+            if distance[char_pred + 1, char_ref + 1] == diagonal:
+                # exact match
+                result.append(f"<span class='exact-match'>{prediction[char_pred]}</span>")
+            elif distance[char_pred + 1, char_ref + 1] > diagonal:
+                result.append(f"<span class='delSubts'>{reference[char_ref]}</span>")
+                result.append(f"<span class='insertion'>{prediction[char_pred]}</span>")
+            else:
+                result.append(f"<span class='insertion'>{prediction[char_pred]}</span>")
+                result.append(f"<span class='delSubts'>{reference[char_ref]}</span>")
+        elif (direction == "<-"):
+            result.append(f"<span class='insertion'>{prediction[char_pred]}</span>")
+        elif (direction == "^"):
+            result.append(f"<span class='delSubts'>{reference[char_ref]}</span>")
+
+    # reverse the list of result
+    return result[::-1]
+
 
 
 def make_dataframe(score_board, reference):
@@ -115,6 +202,8 @@ def index():
     error = None
     tables = None
     titles = None
+    reference = ""
+    prediction = ""
 
     if request.method == "POST":
         kami_form = kamiForm(request.form)
@@ -128,11 +217,25 @@ def index():
                 round_digits=app.config["KAMI_OPT_ROUND"],
                 apply_transforms=kami_form.options)
             tables, titles = make_dataframe(kevaluator.scores.board, kami_form.reference)
+            reference = kevaluator.reference_preprocess
+            prediction = kevaluator.prediction_preprocess
+            if reference == "":
+                reference = kami_form.reference
+            if prediction == "":
+                prediction = kami_form.prediction
         else:
             print("cannot perform evaluation")
             error = "Invalid Form"
 
         tables = correct_style(tables)
 
-    return render_template('page/index.html', title="KaMI App", kami_version = app.config['KAMI_VERSION'], error=error, tables=tables, titles=titles)
+    return render_template('page/index.html',
+                           title="KaMI App",
+                           kami_version= app.config['KAMI_VERSION'],
+                           reference=reference,
+                           prediction=prediction,
+                           comparaison=show_diff_color_html(reference, prediction),
+                           error=error,
+                           tables=tables,
+                           titles=titles)
 
