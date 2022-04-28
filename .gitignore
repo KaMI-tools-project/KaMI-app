@@ -1,4 +1,12 @@
+.idea/
+.vscode/
+
 venv/
 env/
 **/__pycache__/
 *.pyc
+
+kami-app/app/static/D3js
+kami-app/app/static/bootstrap
+kami-app/app/static/jquery
+

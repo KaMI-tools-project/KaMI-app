@@ -1,18 +1,67 @@
 :root{
     --red-main     : #AA0018;
+    --dark-red     : #780018;
     --white-main   : #FFFFFFFF;
     --gray-main    : #7a7777;
     --black-main   : #000000FF;
     --red-contrast : #D10047;
+    --delight-blue : #5fbcd3;
+
+    --exact        : #3CB371;
+    --insert       : #4169E1;
+    --delsubts     : #D2122E;
 }
 
 body {
     position: relative;
-    min-height: 100%;
+    height: 100%;
 }
+
+
+
+#copyright {
+    font-size: 13px;
+}
+
+.under-link {
+  position: relative;
+  display: inline-block;
+}
+
+a:hover {
+    color: var(--delight-blue) !important;
+}
+
+.under-link:after {
+  content: "";
+  position: absolute;
+  left:0;
+  top: 100%;
+  width: 0;
+  height: 2px;
+  background-color: var(--delight-blue);
+  transition: width .3s ease-in-out;
+}
+.under-link:hover:after {
+  width: 100%;
+}
+
 
 .a_inline {
     color: var(--red-main);
+}
+
+#compare-btn{
+    background-color: var(--red-main);
+    border-color: var(--red-main);
+    color: white;
+    margin-top: 3%;
+}
+
+#compare-btn:hover{
+    background-color: var(--dark-red)  !important;
+    border-color: var(--dark-red) !important;
+    color: white;
 }
 
 /*
@@ -31,6 +80,7 @@ height: 3.5rem; }
     box-shadow:0 0 10px var(--white-main);
 }
 
+
 #top-navbar, #bottom-footer {
     background-color: var(--red-main);
     font-weight: bold;
@@ -47,8 +97,10 @@ height: 3.5rem; }
 
 footer{
     background-color: var(--red-main) !important;
-    position: relative;
     right: 0;bottom:0;left:0;
+    clear: both;
+    position: relative;
+    max-height: 100%;
 }
 
 /*
@@ -96,6 +148,7 @@ footer{
     color: var(--red-main);
 }
 
+
 .panel-title::after {
   content: "\f107";
   color: #333;
@@ -110,17 +163,47 @@ footer{
 }
 
 .exact-match{
-    color:#3CB371;
+    color:var(--exact);
 }
 
 .insertion{
-    color: #4169E1;
+    color: var(--insert);
 }
 
 .delSubts{
-    color: #D2122E;
+    color: var(--delsubts);
+}
+
+.char{
+    background: rgba(123, 123, 126, 0.4);
 }
 
 .clear {
     color: white !important;
 }
+
+tr{
+    text-align: center;
+}
+
+.label-vs{
+    text-align: center;
+}
+
+.col-vt-text{
+    font-family: Helvetica;
+    font-size: 17px;
+    text-align: justify;
+    white-space: pre-wrap;
+}
+
+
+td, th {
+  padding: 1px 4px;
+}
+
+.info-metrics{
+    display: none;
+}
+
+

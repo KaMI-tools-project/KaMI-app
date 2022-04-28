@@ -1,23 +1,25 @@
-const ReferenceInput          = document.querySelector('#reference');
-const PredictionInput         = document.querySelector('#prediction');
+"use strict";
 
-const areaNormalShadow        = "0 0 10px var(--white-main)";
-const areaSuccessShadow       = "0 0 10px green";
-const areaErrorShadow         = "0 0 10px red";
+const ReferenceInput = document.querySelector('#reference');
+const PredictionInput = document.querySelector('#prediction');
 
-const areaPlaceHolderMsgError = "Only raw text (.txt) are valid, please retry.";
-const referencePlaceHolder    = "Drag & Drop or Paste the expected transcription...";
-const predictionPlaceHolder   = "Drag & Drop or Paste the transcription produced by the model you wish to evaluate...";
+const areaNormalShadow = "0 0 10px var(--white-main)";
+const areaSuccessShadow = "0 0 10px green";
+const areaErrorShadow = "0 0 10px red";
+
+const areaPlaceHolderMsgError = "Only raw text format (.txt) are valid, please retry.";
+const referencePlaceHolder = "Drag & Drop or Paste the expected transcription...";
+const predictionPlaceHolder = "Drag & Drop or Paste the transcription produced by the model you wish to evaluate...";
 
 // Global loop to add event listener on inputs (textarea)
 [ReferenceInput, PredictionInput].forEach(item => {
     item.addEventListener('drop', event => {
         dropHandler(event);
     });
-    item.addEventListener('input',  function (){
+    item.addEventListener('input', function () {
         AreaStateShadow(item, 'normal');
         AreaPlaceHolderState(item, item.id, 'normal')
-        if (item.value !== ""){
+        if (item.value !== "") {
             AreaStateShadow(item, 'success');
         }
     })
@@ -31,9 +33,10 @@ const predictionPlaceHolder   = "Drag & Drop or Paste the transcription produced
  */
 function AreaStateShadow(element, type) {
     element.style["boxShadow"] = areaNormalShadow;
-    if (type==='error'){
+    if (type === 'error') {
         element.style["boxShadow"] = areaErrorShadow;
-    }if (type==='success'){
+    }
+    if (type === 'success') {
         element.style["boxShadow"] = areaSuccessShadow;
     }
 }
@@ -45,14 +48,16 @@ function AreaStateShadow(element, type) {
  * @param {string} type Output level desire
  * @return {undefined}
  */
-function AreaPlaceHolderState(element, id, type='normal'){
-    if (type === 'normal'){
-        if (id === 'reference'){
-            element.placeholder    = referencePlaceHolder;
-        }if (id === 'prediction'){
-            element.placeholder    = predictionPlaceHolder;
+function AreaPlaceHolderState(element, id, type = 'normal') {
+    if (type === 'normal') {
+        if (id === 'reference') {
+            element.placeholder = referencePlaceHolder;
         }
-    }if(type==='error'){
+        if (id === 'prediction') {
+            element.placeholder = predictionPlaceHolder;
+        }
+    }
+    if (type === 'error') {
         element.value = '';
         element.placeholder = areaPlaceHolderMsgError;
     }
@@ -75,9 +80,9 @@ function dropHandler(event) {
     const reader = new FileReader();
 
     // Get content information from input event
-    let dropEvent         = event.dataTransfer.items;
+    let dropEvent = event.dataTransfer.items;
     let dropEventMimetype = dropEvent[0].type;
-    let dropEventFormat   = dropEvent[0].kind;
+    let dropEventFormat = dropEvent[0].kind;
 
     // Create EventListener for setting text area value
     reader.addEventListener("load", (e) => {
@@ -90,14 +95,13 @@ function dropHandler(event) {
     }, false);
 
     // Use dataTransfer for interacting with file
-    if (dropEvent){
-        if (dropEventFormat === 'file' && dropEventMimetype === 'text/plain'){
+    if (dropEvent) {
+        if (dropEventFormat === 'file' && dropEventMimetype === 'text/plain') {
             let file = dropEvent[0].getAsFile();
             reader.readAsText(file);
             AreaStateShadow(textArea, 'success')
             AreaPlaceHolderState(textArea, dropId, 'normal')
-        }
-        else{
+        } else {
             AreaStateShadow(textArea, 'error')
             AreaPlaceHolderState(textArea, dropId, 'error')
         }

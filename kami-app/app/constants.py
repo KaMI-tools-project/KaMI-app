@@ -1,13 +1,22 @@
-import os
-import kami
+# -*- coding: utf-8 -*-
 
-#UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'uploads')
-#ALLOWED_EXTENSIONS = set(['txt'])
-#MAX_FILESIZE = 500000000 #  Allowing 500 MB max
+MAPPING_TITLES = {"default": "Default",
+                  "non_digits": "Ignoring digits",
+                  "lowercase": "Ignoring case",
+                  "remove_punctuation": "Ignoring punctuation",
+                  "remove_diacritics": "Ignoring diacritics",
+                  "all_transforms": "Combining all options"}
 
-KAMI_OPT_VERB = False
-KAMI_OPT_TRUNC = True
-KAMI_OPT_PERC = True
-KAMI_OPT_ROUND = '0.001'
-
-KAMI_VERSION = kami.__version__
+MAPPING_SCORES_INDEX = {"cer": "Char. Error Rate (CER)",
+                        "wer": "Word Error Rate (WER)",
+                        "levensthein_distance_char": "Levensthein Distance (Char.)",
+                        "levensthein_distance_words": "Levensthein Distance (Words)",
+                        "hamming_distance": "Hamming Distance",
+                        "wacc": "Word Accuracy (Wacc)",
+                        "mer": "Match Error Rate (MER)",
+                        "cil": "Char. Information Lost (CIL)",
+                        "cip": "Char. Information Preserved (CIP)",
+                        "hits": "Hits",
+                        "substitutions": "Substitutions",
+                        "deletions": "Deletions",
+                        "insertions": "Insertions"}
