@@ -3,9 +3,9 @@
 
 <!-- end of badges -->
 
-# Kramin App
+# KaMI App
 
-## Go check the demo application on heroku
+## Go check the application on heroku
 
 ➡️ https://kami-app.herokuapp.com/
 
