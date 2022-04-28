@@ -1,4 +1,4 @@
-from app.app import app
+from app.config import app
 
 
 #Memo on config:

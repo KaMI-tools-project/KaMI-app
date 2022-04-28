@@ -3,9 +3,11 @@
 
 <!-- end of badges -->
 
-# Kramin App
+# KaMI App
 
-## Go check the demo application on heroku
+<img src="./docs/static/kramin_carmin_app.png" alt="KaMI lib logo" height="100" width ="100"/>
+
+## Go check the application on heroku
 
 ➡️ https://kami-app.herokuapp.com/
 

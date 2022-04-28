@@ -1,169 +1,178 @@
-{%extends "headerfooter.html"%}
+{% extends "headerfooter.html"%}
 
 {% block body %}
-
-    <!--
-    {% with errors = get_flashed_messages(category_filter=["error"]) %}
-      {% if errors %}
-        <ul class=flashes>
-        {% for msg in errors %}
-          <li style="color: firebrick">{{ msg }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-    -->
-
     <section class="jumbotron text-center pb-2">
         <div class="container">
+            {% include 'partials/kami_logo_animation.svg' %}
             <h1 class="jumbotron-heading">Welcome to KaMI App!</h1>
             <p class="lead text-muted">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</p>
-            <p>
-                <a href="https://colab.research.google.com/drive/1nk0hNtL9QTO5jczK0RPEv9zF3nP3DpOc?usp=sharing" class="btn btn btn-outline-light my-2"><i class="fab fa-google-drive"></i> Do more with KaMI</a>
+            <p><a href="https://colab.research.google.com/drive/1nk0hNtL9QTO5jczK0RPEv9zF3nP3DpOc?usp=sharing" class="btn btn btn-outline-dark my-2"><i class="fab fa-google-drive"></i> Do more with KaMI-lib colab</a>
         </div>
     </section>
 
     <section class="mb-5">
         <div class="container form-zone py-4">
-            <form action="/" method="POST">
+            <form name="options-to-compute" id="options-form-compare" onsubmit="return false;">
                 <div class="container">
                     <div class="form-group row mx-3">
-                        <label class="" for="reference">Reference</label>
+                        <label class="" for="reference"><b>Reference</b></label>
                         <textarea name="reference" class="form-control" id="reference" rows="6" placeholder="Drag & Drop or Paste the expected transcription..." required></textarea>
                     </div>
                     <div class="form-group row mx-3">
-                        <label class="" for="prediction">Prediction</label>
+                        <label class="" for="prediction"><b>Prediction</b></label>
                         <textarea name="prediction" class="form-control" id="prediction" rows="6" placeholder="Drag & Drop or Paste the transcription produced by the model you wish to evaluate..." required></textarea>
                     </div>
                 </div>
                 <div class="form-group row mx-3">
                     <div class="container ml-5">
+                        <p><b>Text preprocessing options</b></p>
+                        <hr>
                         <div class="form-group row">
-                            <input class="form-check-input" type="checkbox" name="optdigit" id="optdigit">
+                            <input class="form-check-input" type="checkbox" name="optdigit" id="optdigit" value="D">
                             <label class="form-check-label" for="optdigit">Ignore all digits</label>
                         </div>
                         <div class="form-group row">
-                            <input class="form-check-input" type="checkbox" name="optcase" id="optcase">
+                            <input class="form-check-input" type="checkbox" name="optcase" id="optcase" value="L">
                             <label class="form-check-label" for="optcase">Ignore text case (all in lower case)</label>
                         </div>
                         <div class="form-group row">
-                            <input class="form-check-input" type="checkbox" name="optponct" id="optponct">
+                            <input class="form-check-input" type="checkbox" name="optponct" id="optponct" value="P">
                             <label class="form-check-label" for="optponct">Ignore the punctuation</label>
                         </div>
                         <div class="form-group row">
-                            <input class="form-check-input" type="checkbox" name="optdiac" id="optdiac">
+                            <input class="form-check-input" type="checkbox" name="optdiac" id="optdiac" value="X">
                             <label class="form-check-label" for="optdiac">Ignore diacritical signs</label>
+                        </div>
+                        <br>
+                        <p><b>Features available</b></p>
+                        <hr>
+                        <div class="form-group row">
+                            <input class="form-check-input" type="checkbox" name="optVT" id="optVT" value="1" checked>
+                            <label class="form-check-label" for="optVT" title="If your text is very long, it can be useful to deactivate this option.">Create versus text</label>
                         </div>
                     </div>
                 </div>
                 <div class="text-center">
-                    <button id="compare-btn" style="margin-top: 3%; background-color: #780018; border-color: #780018;" class="btn btn-primary" type="submit">Compare</button>
+                    <button id="compare-btn" class="btn btn-primary"  type="submit"><span id="spinner-compare" class="spinner-border spinner-border-sm" role="status" aria-hidden="true" style="display: none;"></span><span id="message-compare-btn">Compare</span></button>
                 </div>
             </form>
         </div>
     </section>
+
     <br>
     <br>
+
     <section>
-        {% if tables and titles %}
-            <div class="container pb-3 mb-2">
-                <div class="row">
-                    <div class="table-responsive">
-                        {% for table in tables %}
-                            {{ titles[loop.index] }}
-                            {{ table|safe }}
-                        {% endfor %}
+        <div id="metrics-dashboard-container" class="container pb-3 mb-2" style="display: none;">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default card">
+                    <div class="card-header panel-heading">
+                        <h3 id="title-metrics-dashboard" aria-expanded="true"><i class="fa-solid fa-gauge"></i> Metrics dashboard</h3>
+                    </div>
+                    <div id="collapseMetrics">
+                        <br>
+                        <button id="export-table-csv" type="button" class="btn btn-success" data-export="export" onclick="tableToCSV()"><i class="fa-solid fa-file-export"></i> Export to CSV</button>
+                        <button type="button" class="btn btn-primary btn-help" data-toggle="modal" data-target=".help_main"><i class="far fa-question-circle"></i> Understand the metrics</button>
+                        <br>
+                        <br>
+                        <div id="table-result-container" class="table-responsive"></div>
                     </div>
                 </div>
             </div>
-        {% endif %}
+        </div>
     </section>
-    {% if tables and titles %}
-        <section>
-            <div class="container pb-3 mb-2">
-                <div class="panel-group" id="accordion">
 
-                    <!-- First Panel -->
-                    <div class="panel panel-default card">
-                        <div class="card-header panel-heading">
-                            <h3 class="panel-title" data-toggle="collapse" data-target="#collapseOne"><i class="fa fa-code-compare"></i> Show versus text</h3>
-                        </div>
+    <section>
+        <div id="main-vt-container" class="container pb-3 mb-2" style="display: none">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default card">
+                    <div class="card-header panel-heading">
+                        <h3 class="panel-title" data-toggle="collapse" data-target="#collapseVT"><i class="fa fa-code-compare"></i> Show versus text</h3>
+                    </div>
+                    <div id="collapseVT" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <div>
+                                <fieldset>
+                                    <legend>Show or hide operations :</legend>
 
-                        <div id="collapseOne" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div >
-                                    <fieldset>
-                                        <legend>Choose character operations:</legend>
+                                    <div>
+                                        <input type="checkbox" id="exact-match" name="exact-match"
+                                               checked>
+                                        <label class="exact-match" for="exact-match">Exact match</label>
+                                    </div>
 
-                                        <div>
-                                            <input type="checkbox" id="exact-match" name="exact-match"
-                                                   checked>
-                                            <label for="exact-match" style="color:#3CB371;">Exact match</label>
-                                        </div>
+                                    <div>
+                                        <input type="checkbox" id="insertion" name="insertion"
+                                               checked>
+                                        <label class="insertion" for="insertion">Insertion</label>
+                                    </div>
 
-                                        <div>
-                                            <input type="checkbox" id="insertion" name="insertion"
-                                                   checked>
-                                            <label for="insertion" style="color: #4169E1;">Insertion</label>
-                                        </div>
-
-                                        <div>
-                                            <input type="checkbox" id="delSubts" name="delSubts" checked>
-                                            <label for="delSubts" style="color: #D2122E;">Deletion/substition</label>
-                                        </div>
-                                    </fieldset>
+                                    <div>
+                                        <input type="checkbox" id="delSubts" name="delSubts" checked>
+                                        <label class="delSubts" for="delSubts">Deletion/substition</label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <br>
+                            <div id="vt-container">
+                                <div class="row">
+                                    <div class="col label-vs"><b>REFERENCE</b><hr></div>
+                                    <div class="col label-vs"><b>COMPARAISON</b><hr></div>
+                                    <div class="col label-vs"><b>PREDICTION</b><hr></div>
                                 </div>
-                                <br>
-                                <div id="vt-container">
-                                    <div class="row">
-                                        <div class="col"><b>REFERENCE</b><hr></div>
-                                        <div class="col"><b>COMPARAISON</b><hr></div>
-                                        <div class="col"><b>PREDICTION</b><hr></div>
-                                    </div>
-                                    <div class="row" class="card-body" style="max-height: 600px; overflow: auto">
-                                        <div class="col" id="vt-reference">{{ reference }}</div>
-                                        <div class="col" id="versus-text-container">{{ comparaison | join('') | safe }}</div>
-                                        <div class="col" id="vt-prediction">{{ prediction }}</div>
-                                    </div>
+                                <div class="row card-body">
+                                    <pre class="col col-vt-text" id="vt-reference"></pre>
+                                    <pre class="col col-vt-text" id="vt-comparaison"></pre>
+                                    <pre class="col col-vt-text" id="vt-prediction"></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    {% endif %}
-    <section>
-        {% if tables and titles %}
-            <div class="container pb-3 mb-2">
-                <h3>Understand the metrics:</h3>
-                <ul>
-                    <li><span class="font-weight-bold">Levensthein Distance (Char.):</span> Levenshtein distance at character level.</li>
-                    <li><span class="font-weight-bold">Levensthein Distance (Words):</span> Levenshtein distance at word level.</li>
-                    <li><span class="font-weight-bold">Hamming Distance:</span> a score if the strings' lengths match but their content is different; Ø if the strings' lengths don't match.</li>
-                </ul>
-                <ul>
-                    <li><span class="font-weight-bold">WER:</span> Word Error Rate, proportion of words bearing at least one recognition error.</li>
-                    <li><span class="font-weight-bold">CER:</span> Character Error Rate, proportion of characters erroneously transcribed.</li>
-                    <li><span class="font-weight-bold">Wacc:</span> Word Accuracy, proportion of words bearing no recognition error.</li>
-                </ul>
-                <ul>
-                    <li><span class="font-weight-bold">Match Error Rate:</span> metric borrowed from Speech Recognition</li>
-                    <li><span class="font-weight-bold">Char. Information Lost:</span> metric borrowed from Speech Recognition</li>
-                    <li><span class="font-weight-bold">Char. Information Preserve:</span> metric borrowed from Speech Recognition</li>
-                </ul>
-                <ul>
-                    <li><span class="font-weight-bold">Hits:</span> number of characters identical between the reference and the prediction.</li>
-                    <li><span class="font-weight-bold">Substitutions:</span> number of substitutions (a character replaced by another) necessary to make the prediction match the reference</li>
-                    <li><span class="font-weight-bold">Deletions:</span> number of deletions (a character is removed) necessary to make the prediction match the reference</li>
-                    <li><span class="font-weight-bold">Insertions:</span> number of insertions (a character is added) necessary to make the prediction match the reference</li>
-                </ul>
-            </div>
-        {% endif %}
+        </div>
     </section>
+
+    <section>
+        <div class="modal fade help_main" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: var(--red-contrast); color: white">
+                    <h4 class="modal-title"> Understand the metrics</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                    <ul>
+                        <li><span class="font-weight-bold">Levensthein Distance (Char.):</span> Levenshtein distance at character level.</li>
+                        <li><span class="font-weight-bold">Levensthein Distance (Words):</span> Levenshtein distance at word level.</li>
+                        <li><span class="font-weight-bold">Hamming Distance:</span> a score if the strings' lengths match but their content is different; Ø if the strings' lengths don't match.</li>
+                    </ul>
+                    <ul>
+                        <li><span class="font-weight-bold">WER:</span> Word Error Rate, proportion of words bearing at least one recognition error.</li>
+                        <li><span class="font-weight-bold">CER:</span> Character Error Rate, proportion of characters erroneously transcribed.</li>
+                        <li><span class="font-weight-bold">Wacc:</span> Word Accuracy, proportion of words bearing no recognition error.</li>
+                    </ul>
+                    <ul>
+                        <li><span class="font-weight-bold">Match Error Rate:</span> metric borrowed from Speech Recognition</li>
+                        <li><span class="font-weight-bold">Char. Information Lost:</span> metric borrowed from Speech Recognition</li>
+                        <li><span class="font-weight-bold">Char. Information Preserve:</span> metric borrowed from Speech Recognition</li>
+                    </ul>
+                    <ul>
+                        <li><span class="font-weight-bold">Hits:</span> number of characters identical between the reference and the prediction.</li>
+                        <li><span class="font-weight-bold">Substitutions:</span> number of substitutions (a character replaced by another) necessary to make the prediction match the reference</li>
+                        <li><span class="font-weight-bold">Deletions:</span> number of deletions (a character is removed) necessary to make the prediction match the reference</li>
+                        <li><span class="font-weight-bold">Insertions:</span> number of insertions (a character is added) necessary to make the prediction match the reference</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
 {% endblock %}
 
 {% block script %}
-    <script src="{{ url_for('static', filename='js/dragAndDropFunc.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/versusTextFunc.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/exportCsv.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/dragAndDropFunc.min.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.min.js')}}"></script>
 {% endblock %}
