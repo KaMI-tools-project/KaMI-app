@@ -127,13 +127,14 @@ def serialize_scores(board: dict) -> dict:
                 # convert and add correct metrics titles
                 # display in final table
                 for type_metric, score in results.items():
-                    scores[MAPPING_SCORES_INDEX[type_metric]].append(score)
+                    if type_metric != "wer_hunt":
+                        scores[MAPPING_SCORES_INDEX[type_metric]].append(score)
         # final score list eg.
         # [["Levensthein Distance (Char.)", 4, 4, 4, 4], ["Word Error Rate (WER)", 14, 35.54, 46.6, 20], ...]
-        scores = [[type_metric]+scores for type_metric, scores in dict(scores).items()]
+        scores = [[type_metric]+scores for type_metric, scores in dict(scores).items() if type_metric != "wer_hunt"]
     else:
         columns.append(MAPPING_TITLES["default"])
-        scores = [[MAPPING_SCORES_INDEX[type_metric], score] for type_metric, score in board.items()]
+        scores = [[MAPPING_SCORES_INDEX[type_metric], score] for type_metric, score in board.items() if type_metric != "wer_hunt"]
     return {
         "scores": scores,
         "columns": columns

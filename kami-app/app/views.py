@@ -2,19 +2,20 @@
 
 from unicodedata import normalize
 
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, flash, redirect, url_for, abort
 from kami.Kami import Kami
 
 from .config import app
 from .utils import serialize_scores, show_diff_color_html
 
 
-@app.route('/compute_results', methods=['GET', 'POST'])
 @app.route('/')
+@app.route('/compute_results', methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
         try:
             response = dict(request.json)
+
             kevaluator = Kami([
                 response['reference'],
                 response['prediction']],
@@ -24,7 +25,6 @@ def index():
                 round_digits=app.config["KAMI_OPT_ROUND"],
                 apply_transforms=response['preprocessingOpts']
             )
-
             # get preprocess sentences from kami evaluator
             # uncomment to display this sentence
             # in versus text
@@ -49,8 +49,9 @@ def index():
             return jsonify({**serialize_scores(kevaluator.scores.board),
                             **versus_text
                             }), 200
-        except:
-            jsonify({}), 400
+        except MemoryError as e:
+            print(e)
+            return jsonify({}), 400
     return render_template('page/index.html',
                            title="KaMI App",
                            kami_version=app.config['KAMI_VERSION']), 200
@@ -60,7 +61,6 @@ def index():
 def cant_find_page(error):
     """Redirect to 404.html"""
     return render_template("error/404.html", title="KaMI App | Error 404", kami_version=app.config['KAMI_VERSION']), 404
-
 
 @app.errorhandler(500)
 def server_unavailable(error):

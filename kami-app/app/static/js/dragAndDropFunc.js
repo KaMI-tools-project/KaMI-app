@@ -3,6 +3,9 @@
 const ReferenceInput = document.querySelector('#reference');
 const PredictionInput = document.querySelector('#prediction');
 
+const ReferenceMaxLengthCount = document.querySelector("#counter_ref");
+const PredictionMaxLengthCount = document.querySelector("#counter_pred");
+
 const areaNormalShadow = "0 0 10px var(--white-main)";
 const areaSuccessShadow = "0 0 10px green";
 const areaErrorShadow = "0 0 10px red";
@@ -14,16 +17,40 @@ const predictionPlaceHolder = "Drag & Drop or Paste the transcription produced b
 // Global loop to add event listener on inputs (textarea)
 [ReferenceInput, PredictionInput].forEach(item => {
     item.addEventListener('drop', event => {
+        // limitText(item, document.getElementById('counter_ref'), 7000)
         dropHandler(event);
     });
+    item.addEventListener('keydown', function () {
+        limitText(item, chooseCorectCounter(item.id), 7000);
+    })
+    item.addEventListener('keyup', function () {
+        limitText(item, chooseCorectCounter(item.id), 7000);
+    })
     item.addEventListener('input', function () {
         AreaStateShadow(item, 'normal');
         AreaPlaceHolderState(item, item.id, 'normal')
         if (item.value !== "") {
             AreaStateShadow(item, 'success');
         }
-    })
+    });
 })
+
+function chooseCorectCounter(id){
+    if (id === "reference"){
+        return ReferenceMaxLengthCount
+    }
+    return PredictionMaxLengthCount
+}
+
+function limitText(limitField, limitCount, limitNum) {
+    if (limitField.value.length > limitNum) {
+        limitField.value = limitField.value.substring(0, limitNum);
+        limitCount.value = limitNum - limitField.value.length;
+    } else {
+        limitCount.value = limitNum - limitField.value.length;
+    }
+}
+
 
 /**
  * Change border shadow color in relation to input
@@ -84,6 +111,7 @@ function dropHandler(event) {
     let dropEventMimetype = dropEvent[0].type;
     let dropEventFormat = dropEvent[0].kind;
 
+
     // Create EventListener for setting text area value
     reader.addEventListener("load", (e) => {
         // Set text area value with text file content
@@ -92,6 +120,8 @@ function dropHandler(event) {
         // TODO: Text verification needs to be coded
         // Otherwise, when text file has only one line, no new line is added to text area
         textArea.value = e.target.result;
+        console.log(textArea.id)
+        limitText(textArea, chooseCorectCounter(textArea.id), 7000);
     }, false);
 
     // Use dataTransfer for interacting with file
