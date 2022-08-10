@@ -47,6 +47,7 @@ export FLASK_APP=run.py
 
 > the command can be different on Windows
 
+
 To start the app, simply run: `flask run`
 
 
