@@ -2,3 +2,7 @@
 /venv/
 /nenv/
 /README.md
+/kami-app/app/static/js/dragAndDropFunc.js
+/kami-app/app/static/js/dynamicVT.js
+/kami-app/app/static/js/exportCsv.js
+/kami-app/app/static/js/main.js
