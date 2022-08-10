@@ -2,6 +2,7 @@ $('.line').hover(function () {
     var $t = $(this);
     var $i = $('#' + $t.data('id'));
     let type = $t.attr('class').split(' ')[0];
+
     var ot = {
         x: $t.offset().left + $t.width() / 2,
         y: $t.offset().top + $t.height() / 2

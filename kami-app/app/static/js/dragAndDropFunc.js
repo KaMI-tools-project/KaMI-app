@@ -14,17 +14,18 @@ const areaPlaceHolderMsgError = "Only raw text format (.txt) are valid, please r
 const referencePlaceHolder = "Drag & Drop or Paste the expected transcription...";
 const predictionPlaceHolder = "Drag & Drop or Paste the transcription produced by the model you wish to evaluate...";
 
+const LIMIT_CHAR_SIZE = 10000;
+
 // Global loop to add event listener on inputs (textarea)
 [ReferenceInput, PredictionInput].forEach(item => {
     item.addEventListener('drop', event => {
-        // limitText(item, document.getElementById('counter_ref'), 7000)
         dropHandler(event);
     });
     item.addEventListener('keydown', function () {
-        limitText(item, chooseCorectCounter(item.id), 7000);
+        limitText(item, chooseCorectCounter(item.id), LIMIT_CHAR_SIZE);
     })
     item.addEventListener('keyup', function () {
-        limitText(item, chooseCorectCounter(item.id), 7000);
+        limitText(item, chooseCorectCounter(item.id), LIMIT_CHAR_SIZE);
     })
     item.addEventListener('input', function () {
         AreaStateShadow(item, 'normal');
@@ -35,12 +36,11 @@ const predictionPlaceHolder = "Drag & Drop or Paste the transcription produced b
     });
 })
 
+
 function chooseCorectCounter(id){
-    if (id === "reference"){
-        return ReferenceMaxLengthCount
-    }
-    return PredictionMaxLengthCount
+    return (id === "reference") ? ReferenceMaxLengthCount : PredictionMaxLengthCount
 }
+
 
 function limitText(limitField, limitCount, limitNum) {
     if (limitField.value.length > limitNum) {
@@ -120,8 +120,7 @@ function dropHandler(event) {
         // TODO: Text verification needs to be coded
         // Otherwise, when text file has only one line, no new line is added to text area
         textArea.value = e.target.result;
-        console.log(textArea.id)
-        limitText(textArea, chooseCorectCounter(textArea.id), 7000);
+        limitText(textArea, chooseCorectCounter(textArea.id), LIMIT_CHAR_SIZE);
     }, false);
 
     // Use dataTransfer for interacting with file

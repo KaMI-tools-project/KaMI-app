@@ -1,11 +1,14 @@
-<!-- badges -->
-[![Python Version](https://img.shields.io/badge/python-3.7-blue)](#) [![GitLab license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://gitlab.inria.fr/dh-projects/kami/Kami-app/master/LICENSE)  [![Deployed on Heroku](https://img.shields.io/badge/deployed%20on-heroku-%23664986)](https://kami-app.herokuapp.com/) 
 
-<!-- end of badges -->
+<img src="docs/static/kamiapp_logo.png" width="200" align="right">
 
-# KaMI App
+KaMI App
+=====
 
-<img src="./docs/static/kramin_carmin_app.png" alt="KaMI lib logo" height="100" width ="100"/>
+![Python Version](https://img.shields.io/badge/Python-%3E%3D%203.7-%2313aab7)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Deployed on Heroku](https://img.shields.io/badge/deployed%20on-heroku-%23664986)](https://kami-app.herokuapp.com/) 
+
+Web application to evaluate transcription task (HTR/OCR) based on Python [KaMI-lib](https://github.com/KaMI-tools-project/KaMi-lib) package.
 
 ## Go check the application on heroku
 

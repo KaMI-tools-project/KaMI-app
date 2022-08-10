@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
 :root{
     --red-main     : #AA0018;
     --dark-red     : #780018;
@@ -15,9 +17,31 @@
 body {
     position: relative;
     height: 100%;
+    width: 100%;
 }
 
+#main-container{
+    width: 100%;
+    height: 100%;
+}
 
+#name-software{
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+}
+
+input[type='checkbox']:hover{
+    cursor: pointer;
+}
+
+#version-software{
+    padding: 18px;
+}
+
+#welcome-title{
+    font-family: 'Fredoka One', cursive;
+    font-size: 2em;
+}
 
 #copyright {
     font-size: 13px;
@@ -32,11 +56,32 @@ a:hover {
     color: var(--delight-blue) !important;
 }
 
+.dash-btn{
+    margin-left: 30px;
+}
+
+#vt-configs{
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+
+#fieldset-vt{
+    background-color: #F7F7F7;
+    max-width:500px;
+    padding:16px;
+    border-radius: 10px;
+}
+
+#fieldset-vt-title{
+    font-weight: bold ;
+}
+
 .under-link:after {
   content: "";
   position: absolute;
   left:0;
-  top: 100%;
+  top: 80%;
   width: 0;
   height: 2px;
   background-color: var(--delight-blue);
@@ -134,6 +179,14 @@ footer{
   margin-right: auto;
   width: 50%;
 }*/
+
+#title-metrics-dashboard{
+    font-family: 'Fredoka One', cursive;
+}
+
+#title-vt-container{
+    font-family: 'Fredoka One', cursive;
+}
 
 .jumbotron {
     background-color: var(--white-main);

@@ -4,8 +4,8 @@
     <section class="jumbotron text-center pb-2">
         <div class="container">
             {% include 'partials/kami_logo_animation.svg' %}
-            <h1 class="jumbotron-heading">Welcome to KaMI App!</h1>
-            <p class="lead text-muted">KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task comparing a correct transcription (reference) and a prediction.</p>
+            <h1 id="welcome-title" class="jumbotron-heading">Welcome to KaMI App!</h1>
+            <p class="lead text-muted"><i>KaMI stands for Kraken Model Inspector. It evaluates the success of a transcription task (HTR, OCR) comparing a correct transcription (reference) and a prediction.</i></p>
             <p><a href="https://colab.research.google.com/drive/1nk0hNtL9QTO5jczK0RPEv9zF3nP3DpOc?usp=sharing" class="btn btn btn-outline-dark my-2"><i class="fab fa-google-drive"></i> Do more with KaMI-lib colab</a>
         </div>
     </section>
@@ -15,12 +15,12 @@
             <form name="options-to-compute" id="options-form-compare" onsubmit="return false;">
                 <div class="container">
                     <div class="form-group row mx-3">
-                        <label class="" for="reference"><b>Reference</b> (Maximum characters: 7000) You have <input id="counter_ref" readonly type="text" name="countdown" size="3" value="7000"> characters left.</label>
+                        <label class="" for="reference"><b>Reference</b> (Maximum characters: 10 000) You have <input id="counter_ref" readonly type="text" name="countdown" size="5" value="10000"> characters left.</label>
                         <p style="font-size: small"> </p>
                         <textarea name="reference" class="form-control" id="reference" rows="6" placeholder="Drag & Drop or Paste the expected transcription..." required></textarea>
                     </div>
                     <div class="form-group row mx-3">
-                        <label class="" for="prediction"><b>Prediction</b> (Maximum characters: 7000) You have <input id="counter_pred" readonly type="text" name="countdown" size="3" value="7000"> characters left.</label>
+                        <label class="" for="prediction"><b>Prediction</b> (Maximum characters: 10 000) You have <input id="counter_pred" readonly type="text" name="countdown" size="5" value="10000"> characters left.</label>
                         <textarea name="prediction" class="form-control" id="prediction" rows="6" placeholder="Drag & Drop or Paste the transcription produced by the model you wish to evaluate..." required></textarea>
                     </div>
                 </div>
@@ -72,8 +72,8 @@
                     </div>
                     <div id="collapseMetrics">
                         <br>
-                        <button id="export-table-csv" type="button" class="btn btn-success" data-export="export" onclick="tableToCSV()"><i class="fa-solid fa-file-export"></i> Export to CSV</button>
-                        <button type="button" class="btn btn-primary btn-help" data-toggle="modal" data-target=".help_main"><i class="far fa-question-circle"></i> Understand the metrics</button>
+                        <button id="export-table-csv" type="button" class="btn btn-success dash-btn" data-export="export" onclick="tableToCSV()"><i class="fa-solid fa-file-export"></i> Export to CSV</button>
+                        <button type="button" class="btn btn-primary btn-help dash-btn" data-toggle="modal" data-target=".help_main"><i class="far fa-question-circle"></i> Understand the metrics</button>
                         <br>
                         <br>
                         <div id="table-result-container" class="table-responsive"></div>
@@ -88,13 +88,13 @@
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default card">
                     <div class="card-header panel-heading">
-                        <h3 class="panel-title" data-toggle="collapse" data-target="#collapseVT"><i class="fa fa-code-compare"></i> Show versus text</h3>
+                        <h3 id="title-vt-container" class="panel-title" data-toggle="collapse" data-target="#collapseVT"><i class="fa fa-code-compare"></i> Show versus text</h3>
                     </div>
                     <div id="collapseVT" class="panel-collapse collapse">
                         <div class="panel-body">
-                            <div>
-                                <fieldset>
-                                    <legend>Show or hide operations :</legend>
+                            <div id="vt-configs">
+                                <fieldset id="fieldset-vt">
+                                    <legend id="fieldset-vt-title">Show/Hide edit operations:</legend>
 
                                     <div>
                                         <input type="checkbox" id="exact-match" name="exact-match"

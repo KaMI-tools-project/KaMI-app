@@ -19,4 +19,6 @@ MAPPING_SCORES_INDEX = {"cer": "Char. Error Rate (CER in %)",
                         "hits": "Hits",
                         "substitutions": "Substitutions",
                         "deletions": "Deletions",
-                        "insertions": "Insertions"}
+                        "insertions": "Insertions",
+                        "Length_reference": "Total char. in reference",
+                        "Length_prediction": "Total char. in prediction"}

@@ -21,16 +21,16 @@
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav bd-navbar-nav flex-row">
             <li class="nav-item">
-                <a class="navbar-brand" href="{{url_for('index')}}">KaMI</a>
+                <a id="name-software" class="navbar-brand" href="{{url_for('index')}}">KaMI</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link under-link" href="https://gitlab.inria.fr/dh-projects/kami/kami-lib" target="_blank">Running with kamilib {{ kami_version }}</a>
+                <a id="version-software" class="nav-link under-link" href="https://github.com/KaMI-tools-project/KaMi-lib" target="_blank"><i class="fa-brands fa-python"></i> Running with kamilib {{ kami_version }}</a>
             </li>
         </ul>
     </div>
 </header>
 
-<div class="row">
+<div id="main-container" class="row">
     <div class="col">
         {% block body %}{% endblock %}
     </div>
@@ -39,11 +39,11 @@
 <footer id="bottom-footer" class="py-5">
     <div class="container text-center">
         <span>
-          <a href="https://gitlab.inria.fr/dh-projects/kami/" target="_blank">
-            <i class="fab fa-gitlab"></i></i> KaMI on Gitlab</a>
+          <a href="https://github.com/KaMI-tools-project" target="_blank">
+            <i class="fab fa-github"></i></i> KaMI tools on GitHub</a>
         </span>
         <br>
-        <p id="copyright">© 2022. This work is under MIT License.</p>
+        <p id="copyright">© 2021-2022. This work is under MIT License.</p>
     </div>
 </footer>
 

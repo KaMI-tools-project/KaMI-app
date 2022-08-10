@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import os
-
-import kami
+import pkg_resources
 
 from flask import Flask
+
+
+def pkg_version(name_pkg: str) -> str:
+    return pkg_resources.get_distribution(name_pkg).version
+
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 TEMPLATES = os.path.join(BASE, 'templates')
@@ -19,7 +23,8 @@ app.config["KAMI_OPT_VERB"] = False
 app.config["KAMI_OPT_TRUNC"] = True
 app.config["KAMI_OPT_PERC"] = True
 app.config["KAMI_OPT_ROUND"] = '0.001'
-app.config['KAMI_VERSION'] = kami.__version__
+app.config['KAMI_VERSION'] = pkg_version("kamilib")
+app.config['KRAKEN_VERSION'] = pkg_version("kraken")
 
 from .views import index, cant_find_page, server_unavailable
 

@@ -10,21 +10,26 @@ const inputDelSubts           = document.querySelector("#delSubts");
 
 function showHideSpinner() {
     let spinnerLoad = document.querySelector("#spinner-compare");
-    if (spinnerLoad.style['display'] === "none"){
-        spinnerLoad.style['display'] = "";
-        document.querySelector('#message-compare-btn').textContent = " Release the Kraken...! 🐙";
-        compareBtn.setAttribute('disabled', "true");
-    }else{
+
+    const currentState = () => {
         spinnerLoad.style['display'] = "none";
         document.querySelector('#message-compare-btn').textContent = " Compare";
         compareBtn.removeAttribute('disabled');
     }
+
+    const loadState = () => {
+        spinnerLoad.style['display'] = "";
+        document.querySelector('#message-compare-btn').textContent = " Release the Kraken...! 🐙";
+        compareBtn.setAttribute('disabled', "true");
+    }
+
+    return (spinnerLoad.style['display'] === "none") ? loadState() : currentState()
 }
 
+
 function getTextAreaValue() {
-    let referenceVal  = document.querySelector('#reference').value;
-    let predictionVal = document.querySelector('#prediction').value;
-    return [referenceVal, predictionVal];
+    return [document.querySelector('#reference').value,
+            document.querySelector('#prediction').value];
 }
 
 
@@ -35,16 +40,16 @@ function serializeFormData(reference, prediction) {
         prediction: prediction,
         preprocessingOpts: "",
         vtOpt:0
-    }
-    for (let input in inputs){
-        if(inputs[input].checked){
-            if (inputs[input].name !== "optVT"){
-                data.preprocessingOpts += inputs[input].value;
-            }else{
-                data.vtOpt = 1
-            }
-        }
-    }
+    };
+
+    Object.values(inputs).forEach(input =>{
+        input.checked
+            ? input.name !== "optVT"
+                ? data.preprocessingOpts += input.value
+                : data.vtOpt = 1
+            : input;
+    });
+
     return data
 }
 
@@ -69,22 +74,16 @@ function tabulate(columns, scores){
 }
 
 function populateVersusText(reference, comparaison, prediction){
-    document.querySelector("#vt-reference").innerHTML = reference.join('');
-    document.querySelector("#vt-comparaison").innerHTML = comparaison.join('');
-    document.querySelector("#vt-prediction").innerHTML  = prediction.join('');
+    [{reference:reference}, {comparaison: comparaison}, {prediction: prediction}].forEach(version => {
+        document.querySelector(`#vt-${Object.keys(version)[0]}`).innerHTML = Object.values(version)[0].join('');
+    });
 }
 
 function versusTextSelector(){
     [inputExactMatch, inputInsert, inputDelSubts].forEach(btn => {
         btn.addEventListener('click', function (event) {
-            let classname = event.target.id;
-            document.querySelectorAll("."+classname).forEach(item => {
-                if(event.target.checked){
-                    item.classList.remove('clear');
-                }
-                else{
-                    item.classList.add('clear');
-                }
+            document.querySelectorAll("."+event.target.id).forEach(item => {
+                (event.target.checked) ? item.classList.remove('clear') : item.classList.add('clear');
             });
         })
     })
