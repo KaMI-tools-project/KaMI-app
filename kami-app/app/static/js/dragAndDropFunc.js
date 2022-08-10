@@ -14,7 +14,7 @@ const areaPlaceHolderMsgError = "Only raw text format (.txt) are valid, please r
 const referencePlaceHolder = "Drag & Drop or Paste the expected transcription...";
 const predictionPlaceHolder = "Drag & Drop or Paste the transcription produced by the model you wish to evaluate...";
 
-const LIMIT_CHAR_SIZE = 8000;
+const LIMIT_CHAR_SIZE = 7000;
 
 // Global loop to add event listener on inputs (textarea)
 [ReferenceInput, PredictionInput].forEach(item => {
