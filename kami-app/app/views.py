@@ -3,7 +3,7 @@
 from unicodedata import normalize
 
 from flask import render_template, request, jsonify, flash, redirect, url_for, abort
-from kami.Kami import Kami
+from kami_light.Kami import Kami
 
 from .config import app
 from .utils import serialize_scores, show_diff_color_html

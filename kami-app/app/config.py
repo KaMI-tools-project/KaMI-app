@@ -23,8 +23,7 @@ app.config["KAMI_OPT_VERB"] = False
 app.config["KAMI_OPT_TRUNC"] = True
 app.config["KAMI_OPT_PERC"] = True
 app.config["KAMI_OPT_ROUND"] = '0.001'
-app.config['KAMI_VERSION'] = pkg_version("kamilib")
-app.config['KRAKEN_VERSION'] = pkg_version("kraken")
+app.config['KAMI_VERSION'] = pkg_version("kamilib-light")
 
 from .views import index, cant_find_page, server_unavailable
 

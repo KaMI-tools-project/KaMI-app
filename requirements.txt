@@ -1,11 +1,11 @@
 Flask==2.0.1
 gunicorn==20.0.4
-kamilib==0.1.10
+kamilib-light==0.1.1
 pandas==1.3.3
 numba==0.55.1
 
 # for heroku specifically
--r requirements_heroku.txt
+#-r requirements_heroku.txt
 #-f https://download.pytorch.org/whl/torch_stable.html
 #torch==1.7.0+cpu
 #torchvision==0.8.1+cpu
