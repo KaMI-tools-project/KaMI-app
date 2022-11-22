@@ -13,6 +13,7 @@ Web application to evaluate transcription task (HTR/OCR) based on Python [KaMI-l
 ## Go check the application 
 
 ➡️ On Heroku: https://kami-app.herokuapp.com/ (until 11/28/2022)
+
 ➡️ On Render: https://kami-app.onrender.com/
 
 ## Run the app locally
