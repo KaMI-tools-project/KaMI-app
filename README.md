@@ -6,13 +6,14 @@ KaMI App
 
 ![Python Version](https://img.shields.io/badge/Python-%3E%3D%203.7-%2313aab7)
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Deployed on Heroku](https://img.shields.io/badge/deployed%20on-heroku-%23664986)](https://kami-app.herokuapp.com/) 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Deployed on Heroku](https://img.shields.io/badge/deployed%20on-heroku-%23664986)](https://kami-app.herokuapp.com/) [![Deployed on Render](https://img.shields.io/badge/deployed%20on-Render-green)](https://kami-app.onrender.com/)
 
 Web application to evaluate transcription task (HTR/OCR) based on Python [KaMI-lib](https://github.com/KaMI-tools-project/KaMi-lib) package.
 
-## Go check the application on heroku
+## Go check the application 
 
-➡️ https://kami-app.herokuapp.com/
+➡️ On Heroku: https://kami-app.herokuapp.com/ (until 11/28/2022)
+➡️ On Render: https://kami-app.onrender.com/
 
 ## Run the app locally
 
