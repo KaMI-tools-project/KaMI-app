@@ -16,6 +16,8 @@ Web application to evaluate transcription task (HTR/OCR) based on Python [KaMI-l
 
 ➡️ On Render: https://kami-app.onrender.com/
 
+➡️ On HuggingFace Spaces 🤗 : https://huggingface.co/spaces/lterriel/kami-app
+
 ## Run the app locally
 
 - clone repo
